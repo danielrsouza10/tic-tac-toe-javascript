@@ -3,3 +3,20 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+html,
+body {
+}
+
+.container {
+  display: grid;
+  grid-template: repeat(3, 200px) / repeat(3, 200px);
+}
+
+.box {
+  border: 1px solid black;
+  font-size: 104px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
