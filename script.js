@@ -30,75 +30,36 @@ const jogoDaVelha = {
 
     jogoDaVelha.verificarVencedor();
 
-    console.log(index);
-    console.log(tabuleiro);
+    // console.log(index);
+    // console.log(tabuleiro);
   },
   verificarVencedor: () => {
-    if (
-      tabuleiro[([0], [1], [2])] == "X" ||
-      tabuleiro[([0], [1], [2])] == "O"
-    ) {
-      console.log("vencedor");
-    } else if (
-      tabuleiro[([3], [4], [5])] == "X" ||
-      tabuleiro[([3], [4], [5])] == "O"
-    ) {
-      console.log("vencedor");
-    } else if (
-      tabuleiro[([6], [7], [8])] == "X" ||
-      tabuleiro[([6], [7], [8])] == "O"
-    ) {
-      console.log("vencedor");
-    } else if (
-      tabuleiro[([0], [3], [6])] == "X" ||
-      tabuleiro[([0], [3], [6])] == "O"
-    ) {
-      console.log("vencedor");
-    } else if (
-      tabuleiro[([1], [4], [7])] == "X" ||
-      tabuleiro[([1], [4], [7])] == "O"
-    ) {
-      console.log("vencedor");
-    } else if (
-      tabuleiro[([2], [5], [8])] == "X" ||
-      tabuleiro[([2], [5], [8])] == "O"
-    ) {
-      console.log("vencedor");
-    } else if (
-      tabuleiro[([0], [4], [8])] == "X" ||
-      tabuleiro[([0], [4], [8])] == "O"
-    ) {
-      console.log("vencedor");
-    } else if (
-      tabuleiro[([2], [4], [6])] == "X" ||
-      tabuleiro[([2], [4], [6])] == "O"
-    ) {
-      console.log("vencedor");
-    } else {
-      console.log("empate");
-    }
+    //Este array contém todas as combinações possíveis de células no tabuleiro que podem resultar em uma vitória. Cada elemento do array linhasVitoriosas é, por sua vez, um array que representa uma combinação vitoriosa.
+    const linhasVitoriosas = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // Linhas horizontais
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // Linhas verticais
+      [0, 4, 8],
+      [2, 4, 6], // Linhas diagonais
+    ];
 
-    // if(tabuleiro)
-    // const linhasVitoriosas = [
-    //   [0, 1, 2],
-    //   [3, 4, 5],
-    //   [6, 7, 8], //linhas horizontais
-    //   [0, 3, 6],
-    //   [1, 4, 7],
-    //   [2, 5, 8], //linhas verticais
-    //   [0, 4, 8],
-    //   [2, 4, 6], //linhas diagonais
-    // ];
-    // for (const linha of linhasVitoriosas) {
-    //   const [a, b, c] = linha;
-    //   if (
-    //     this.tabuleiro[a] &&
-    //     this.tabuleiro[a] === this.tabuleiro[b] &&
-    //     this.tabuleiro[a] === this.tabuleiro[c]
-    //   ) {
-    //     return true;
-    //   }
-    // }
+    for (const linha of linhasVitoriosas) {
+      //desestrutura o array atual em linha em três variáveis individuais a, b e c. Essas variáveis representam as posições das células no tabuleiro que estão sendo verificadas para determinar se há uma vitória.
+      const [a, b, c] = linha;
+      //verifica se as células nas posições a, b e c do tabuleiro contêm o mesmo valor (ou seja, se todas são 'X' ou todas são 'O').
+      if (
+        tabuleiro[a] &&
+        tabuleiro[a] === tabuleiro[b] &&
+        tabuleiro[a] === tabuleiro[c]
+      ) {
+        console.log("vencedor");
+        return true;
+      }
+    }
+    return false;
   },
 };
 
