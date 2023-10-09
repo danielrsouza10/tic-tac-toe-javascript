@@ -1,27 +1,135 @@
-    ### Assignment
+# (Quadro de Anotação e Desenho) Etch-a-Sketch
 
-    1. Set up your project with HTML, CSS and Javascript files and get the Git repo all set up.
+## Table of contents
 
-    2. You’re going to store the gameboard as an array inside of a Gameboard object, so start there! Your players are also going to be stored in objects, and you’re probably going to want an object to control the flow of the game itself.
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshots](#screenshots)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-        2.1 Your main goal here is to have as little global code as possible. Try tucking everything away inside of a module or factory. Rule of thumb: if you only ever need ONE of something (gameBoard, displayController), use a module. If you need multiples of something (players!), create them with factories.
+## Overview
 
-    3. Set up your HTML and write a JavaScript function that will render the contents of the gameboard array to the webpage (for now you can just manually fill in the array with "X"s and "O"s)
+### The challenge
 
-    4. Build the functions that allow players to add marks to a specific spot on the board, and then tie it to the DOM, letting players click on the gameboard to place their marker. Don’t forget the logic that keeps players from playing in spots that are already taken!
+Users should be able to:
 
-        4.1 Think carefully about where each bit of logic should reside. Each little piece of functionality should be able to fit in the game, player or gameboard objects. Take care to put them in “logical” places. Spending a little time brainstorming here can make your life much easier later!
+- Play a tic-tac-toe game;
+- Reset the board;
+- See who won the game (if there is one).
 
-        4.2 If you’re having trouble, Building a house from the inside out is a great article that lays out a highly applicable example of how you might organize your code for this project.
+### Screenshots
 
-    5. Build the logic that checks for when the game is over! Should check for 3-in-a-row and a tie.
+![](./assets/Screenshot_1.png)
+![](./assets/Screenshot_2.png)
 
-    6. Clean up the interface to allow players to put in their names, include a button to start/restart the game and add a display element that congratulates the winning player!
+### Layout design credit
 
-    7. Optional - If you’re feeling ambitious create an AI so that a player can play against the computer!
+- Katherine Reyes: [Dribbble progile](https://dribbble.com/klreyes)
 
-        7.1 Start by just getting the computer to make a random legal move.
+### Links
 
-        7.2 Once you’ve gotten that, work on making the computer smart. It is possible to create an unbeatable AI using the minimax algorithm (read about it here, some googling will help you out with this one)
+- Solution URL: [GithHub Repository](https://github.com/danielrsouza10/tic-tac-toe-javascript)
+- Live Site URL: [Tic-tac-toe](https://danielrsouza10.github.io/tic-tac-toe-javascript/)
 
-        7.3 If you get this running definitely come show it off in the chatroom. It’s quite an accomplishment!
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- Javascript Factory Functions and Module Pattern
+
+### What I learned
+
+Improved the manipulation of the DOM with JavaScript.
+Improve Factory Functions on JavaScript.
+Make clean HTML and CSS.
+
+```js
+const jogoDaVelha = {
+  iniciar: () => {
+    tabuleiro = ["", "", "", "", "", "", "", "", ""];
+    container.addEventListener("click", jogoDaVelha.celulaClicada);
+
+    for (i = 0; i < 9; i++) {
+      let box = document.createElement("div");
+      box.innerHTML = "";
+      box.className = "box";
+      box.dataset.index = i;
+      container.appendChild(box);
+    }
+  },
+  celulaClicada: (e) => {
+    //index recebe o index da
+    let index = e.target.attributes["data-index"].value;
+
+    //verifica tabuleiro
+    if ((tabuleiro[index] === "") & !jogoDaVelha.verificarVencedor()) {
+      //tabuleiro recebe na posição do index a escolha do jogador atual
+      tabuleiro[index] = jogadorAtual;
+      //celula recebe a marcaçao do jogador atual
+      e.target.textContent = jogadorAtual;
+    }
+    // console.log(index);
+    // console.log(tabuleiro);
+  },
+  verificarVencedor: () => {
+    //Este array contém todas as combinações possíveis de células no tabuleiro que podem resultar em uma vitória. Cada elemento do array linhasVitoriosas é, por sua vez, um array que representa uma combinação vitoriosa.
+    const linhasVitoriosas = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // Linhas horizontais
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // Linhas verticais
+      [0, 4, 8],
+      [2, 4, 6], // Linhas diagonais
+    ];
+
+    for (const linha of linhasVitoriosas) {
+      //desestrutura o array atual em linha em três variáveis individuais a, b e c. Essas variáveis representam as posições das células no tabuleiro que estão sendo verificadas para determinar se há uma vitória.
+      const [a, b, c] = linha;
+      //verifica se as células nas posições a, b e c do tabuleiro contêm o mesmo valor (ou seja, se todas são 'X' ou todas são 'O').
+      if (
+        tabuleiro[a] &&
+        tabuleiro[a] === tabuleiro[b] &&
+        tabuleiro[a] === tabuleiro[c]
+      ) {
+        container.removeEventListener("click", jogoDaVelha.celulaClicada);
+        let vencedor = document.createElement("div");
+        vencedor.textContent =
+          "O jogador '" + jogadorAtual + "' venceu a partida";
+        resultsDisplay.appendChild(vencedor);
+        return true;
+      }
+    }
+    // verifica e altera o jogador
+    jogadorAtual = jogadorAtual == "X" ? "O" : "X";
+    return false;
+  },
+};
+```
+
+### Continued development
+
+Make it work the message when the game hits a draw;
+Make the player choose between "X" and "O";
+Make the computer to play against one person;
+
+### Useful resources
+
+- [The Odin Project](https://www.theodinproject.com) - This helped me for Factory Functions.
+
+## Author
+
+- Website - [Linkedin](https://www.linkedin.com/in/danielrsouza/)
+- Instagram - [@danielrsouza](https://www.instagram.com/danielrsouza)
+
+This is a solution to the [Tic-tac-toe](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe).

@@ -1,7 +1,11 @@
+const body = document.querySelector("body");
 const container = document.querySelector(".container");
 const resetButton = document.getElementById("reset-button");
+const resultsDisplay = document.querySelector(".results");
+
 resetButton.addEventListener("click", () => {
   container.innerHTML = "";
+  resultsDisplay.innerHTML = "";
   jogoDaVelha.iniciar();
 });
 
@@ -31,16 +35,7 @@ const jogoDaVelha = {
       tabuleiro[index] = jogadorAtual;
       //celula recebe a marcaçao do jogador atual
       e.target.textContent = jogadorAtual;
-      jogadorAtual = jogadorAtual == "X" ? "O" : "X";
-    } else {
-      container.removeEventListener("click", jogoDaVelha.celulaClicada);
-      let vencedor = document.createElement("div");
-      vencedor.textContent = "O jogador " + jogadorAtual + " venceu a partida";
-      container.appendChild(vencedor);
     }
-
-    // verifica e altera o jogador
-
     // console.log(index);
     // console.log(tabuleiro);
   },
@@ -66,25 +61,18 @@ const jogoDaVelha = {
         tabuleiro[a] === tabuleiro[b] &&
         tabuleiro[a] === tabuleiro[c]
       ) {
+        container.removeEventListener("click", jogoDaVelha.celulaClicada);
+        let vencedor = document.createElement("div");
+        vencedor.textContent =
+          "O jogador '" + jogadorAtual + "' venceu a partida";
+        resultsDisplay.appendChild(vencedor);
         return true;
       }
     }
+    // verifica e altera o jogador
+    jogadorAtual = jogadorAtual == "X" ? "O" : "X";
     return false;
   },
 };
 
 jogoDaVelha.iniciar();
-
-// const gameCel = document.createElement("div");
-// gameCel.className = "box";
-
-// function createGameBoard() {}
-
-// let playerOne = 0;
-// let playerTwo = 1;
-
-// function verifyRow() {}
-
-// const player = () => {
-//   let points = 0;
-// };
