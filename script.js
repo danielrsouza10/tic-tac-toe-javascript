@@ -1,10 +1,16 @@
 const container = document.querySelector(".container");
+const resetButton = document.getElementById("reset-button");
+resetButton.addEventListener("click", () => {
+  container.innerHTML = "";
+  jogoDaVelha.iniciar();
+});
+
 let jogadorAtual = "X";
-let choice = "";
 let tabuleiro = ["", "", "", "", "", "", "", "", ""];
 
 const jogoDaVelha = {
   iniciar: () => {
+    tabuleiro = ["", "", "", "", "", "", "", "", ""];
     container.addEventListener("click", jogoDaVelha.celulaClicada);
 
     for (i = 0; i < 9; i++) {
@@ -19,16 +25,21 @@ const jogoDaVelha = {
     //index recebe o index da
     let index = e.target.attributes["data-index"].value;
 
-    //tabuleiro recebe na posição do index a escolha do jogador atual
-    tabuleiro[index] = jogadorAtual;
-
-    //celula recebe a marcaçao do jogador atual
-    e.target.textContent = jogadorAtual;
+    //verifica tabuleiro
+    if ((tabuleiro[index] === "") & !jogoDaVelha.verificarVencedor()) {
+      //tabuleiro recebe na posição do index a escolha do jogador atual
+      tabuleiro[index] = jogadorAtual;
+      //celula recebe a marcaçao do jogador atual
+      e.target.textContent = jogadorAtual;
+      jogadorAtual = jogadorAtual == "X" ? "O" : "X";
+    } else {
+      container.removeEventListener("click", jogoDaVelha.celulaClicada);
+      let vencedor = document.createElement("div");
+      vencedor.textContent = "O jogador " + jogadorAtual + " venceu a partida";
+      container.appendChild(vencedor);
+    }
 
     // verifica e altera o jogador
-    jogadorAtual = jogadorAtual == "X" ? "O" : "X";
-
-    jogoDaVelha.verificarVencedor();
 
     // console.log(index);
     // console.log(tabuleiro);
@@ -55,7 +66,6 @@ const jogoDaVelha = {
         tabuleiro[a] === tabuleiro[b] &&
         tabuleiro[a] === tabuleiro[c]
       ) {
-        console.log("vencedor");
         return true;
       }
     }
@@ -64,13 +74,6 @@ const jogoDaVelha = {
 };
 
 jogoDaVelha.iniciar();
-
-const clearButton = document.getElementById("reset-button");
-clearButton.addEventListener("click", () =>
-  gameBoard.forEach((box) => {
-    box.innerHTML = "";
-  })
-);
 
 // const gameCel = document.createElement("div");
 // gameCel.className = "box";
